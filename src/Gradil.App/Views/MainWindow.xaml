@@ -4,21 +4,23 @@
         Title="Gradil · Orçamento de cercas"
         Width="1100" Height="760" MinWidth="960" MinHeight="640"
         WindowStartupLocation="CenterScreen"
-        FontFamily="Segoe UI" FontSize="14">
+        Background="{StaticResource CorFundo}"
+        FontFamily="Segoe UI" FontSize="14"
+        Foreground="{StaticResource CorTexto}">
 
     <DockPanel>
 
-        <Border DockPanel.Dock="Top" Background="#1F5F99" Padding="28,18">
+        <Border DockPanel.Dock="Top" Background="{StaticResource CorPrincipal}" Padding="28,18">
             <StackPanel>
                 <TextBlock Text="Gradil" FontSize="22" FontWeight="SemiBold" Foreground="White" />
                 <TextBlock Text="Orçamento e pedidos de cercas" Foreground="#CFE0F0" />
             </StackPanel>
         </Border>
 
-        <TabControl Margin="20,16,20,20">
+        <TabControl Margin="20,16,20,20" Background="Transparent" BorderThickness="0" Padding="0,16,0,0">
 
             <TabItem Header="  Novo orçamento  ">
-                <Grid Margin="0,16,0,0">
+                <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="300" />
                         <ColumnDefinition Width="16" />
@@ -30,17 +32,17 @@
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
 
-                    <Border BorderBrush="#DDE3E9" BorderThickness="1" Padding="20">
+                    <Border Style="{StaticResource Cartao}">
                         <StackPanel>
-                            <TextBlock Text="Dados do pedido" FontSize="16" FontWeight="SemiBold" Margin="0,0,0,12" />
+                            <TextBlock Text="Dados do pedido" Style="{StaticResource TituloDoCartao}" />
 
-                            <TextBlock Text="Comprimento da cerca (m)" Margin="0,0,0,4" />
+                            <TextBlock Text="Comprimento da cerca (m)" Style="{StaticResource Rotulo}" Margin="0,0,0,4" />
                             <TextBox Text="{Binding Comprimento, UpdateSourceTrigger=PropertyChanged}" />
 
-                            <TextBlock Text="Altura" Margin="0,12,0,4" />
+                            <TextBlock Text="Altura" Style="{StaticResource Rotulo}" />
                             <ComboBox ItemsSource="{Binding Alturas}" SelectedItem="{Binding Altura}" />
 
-                            <TextBlock Text="Pintura" Margin="0,12,0,4" />
+                            <TextBlock Text="Pintura" Style="{StaticResource Rotulo}" />
                             <ComboBox ItemsSource="{Binding Pinturas}" SelectedItem="{Binding Pintura}">
                                 <ComboBox.ItemTemplate>
                                     <DataTemplate>
@@ -53,25 +55,25 @@
                                 </ComboBox.ItemTemplate>
                             </ComboBox>
 
-                            <TextBlock Text="{Binding Erro}" Foreground="#B3261E"
+                            <TextBlock Text="{Binding Erro}" Foreground="{StaticResource CorErro}"
                                        TextWrapping="Wrap" Margin="0,12,0,0" />
 
                             <StackPanel Orientation="Horizontal" Margin="0,16,0,0">
-                                <Button Content="Confirmar pedido" Command="{Binding ConfirmarCommand}"
-                                        Padding="18,9" Margin="0,0,8,0" />
-                                <Button Content="Cancelar" Command="{Binding CancelarCommand}"
-                                        Padding="18,9" />
+                                <Button Content="Confirmar pedido" Style="{StaticResource BotaoPrincipal}"
+                                        Command="{Binding ConfirmarCommand}" />
+                                <Button Content="Cancelar" Style="{StaticResource BotaoSecundario}"
+                                        Command="{Binding CancelarCommand}" />
                             </StackPanel>
 
-                            <TextBlock Text="{Binding Sucesso}" Foreground="#2E7D32"
+                            <TextBlock Text="{Binding Sucesso}" Foreground="{StaticResource CorSucesso}"
                                        FontWeight="SemiBold" TextWrapping="Wrap" Margin="0,12,0,0" />
                         </StackPanel>
                     </Border>
 
-                    <Border Grid.Column="2" BorderBrush="#DDE3E9" BorderThickness="1" Padding="20">
+                    <Border Grid.Column="2" Style="{StaticResource Cartao}">
                         <Grid>
                             <TextBlock Text="Informe o comprimento para ver o orçamento."
-                                       Foreground="#5F6B75"
+                                       Foreground="{StaticResource CorTextoSuave}"
                                        HorizontalAlignment="Center" VerticalAlignment="Center">
                                 <TextBlock.Style>
                                     <Style TargetType="TextBlock">
@@ -85,28 +87,27 @@
                             </TextBlock>
 
                             <StackPanel Visibility="{Binding TemOrcamento, Converter={StaticResource BoolParaVisibilidade}}">
-                                <TextBlock Text="Orçamento" FontSize="16" FontWeight="SemiBold" Margin="0,0,0,12" />
+                                <TextBlock Text="Orçamento" Style="{StaticResource TituloDoCartao}" />
 
                                 <UniformGrid Columns="3" Margin="0,0,0,16">
                                     <StackPanel>
-                                        <TextBlock Text="Cliente vai construir" Foreground="#5F6B75" />
-                                        <TextBlock FontSize="20" FontWeight="SemiBold"
+                                        <TextBlock Text="Cliente vai construir" Style="{StaticResource Rotulo}" Margin="0,0,0,2" />
+                                        <TextBlock Style="{StaticResource Destaque}"
                                                    Text="{Binding Orcamento.ComprimentoDesejado, StringFormat={}{0:0.00} m}" />
                                     </StackPanel>
                                     <StackPanel>
-                                        <TextBlock Text="Será vendido" Foreground="#5F6B75" />
-                                        <TextBlock FontSize="20" FontWeight="SemiBold" Foreground="#1F5F99"
+                                        <TextBlock Text="Será vendido" Style="{StaticResource Rotulo}" Margin="0,0,0,2" />
+                                        <TextBlock Style="{StaticResource Destaque}" Foreground="{StaticResource CorPrincipal}"
                                                    Text="{Binding Orcamento.ComprimentoVendido, StringFormat={}{0:0.00} m}" />
                                     </StackPanel>
                                     <StackPanel Visibility="{Binding Orcamento.TemDiferenca, Converter={StaticResource BoolParaVisibilidade}}">
-                                        <TextBlock Text="Sobra" Foreground="#5F6B75" />
-                                        <TextBlock FontSize="20" FontWeight="SemiBold" Foreground="#B26A00"
+                                        <TextBlock Text="Sobra" Style="{StaticResource Rotulo}" Margin="0,0,0,2" />
+                                        <TextBlock Style="{StaticResource Destaque}" Foreground="{StaticResource CorAviso}"
                                                    Text="{Binding Orcamento.Diferenca, StringFormat=+{0:0.00} m}" />
                                     </StackPanel>
                                 </UniformGrid>
 
-                                <DataGrid ItemsSource="{Binding Orcamento.Itens}" Width="320" HorizontalAlignment="Left"
-                                          AutoGenerateColumns="False" IsReadOnly="True" HeadersVisibility="Column">
+                                <DataGrid ItemsSource="{Binding Orcamento.Itens}" Width="320" HorizontalAlignment="Left">
                                     <DataGrid.Columns>
                                         <DataGridTextColumn Header="Componente" Binding="{Binding Componente}" Width="*" />
                                         <DataGridTextColumn Header="Quantidade" Binding="{Binding Quantidade}" Width="110" />
@@ -116,15 +117,16 @@
                         </Grid>
                     </Border>
 
-                    <Border Grid.Row="2" Grid.ColumnSpan="3" BorderBrush="#DDE3E9" BorderThickness="1" Padding="20"
+                    <Border Grid.Row="2" Grid.ColumnSpan="3" Style="{StaticResource Cartao}"
                             Visibility="{Binding TemOrcamento, Converter={StaticResource BoolParaVisibilidade}}">
                         <DockPanel>
-                            <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="0,0,0,12">
-                                <TextBlock Text="Esboço da cerca" FontSize="16" FontWeight="SemiBold" />
-                                <TextBlock Text="{Binding AvisoDoDesenho}" Foreground="#5F6B75" Margin="12,3,0,0" />
+                            <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
+                                <TextBlock Text="Esboço da cerca" Style="{StaticResource TituloDoCartao}" />
+                                <TextBlock Text="{Binding AvisoDoDesenho}" Foreground="{StaticResource CorTextoSuave}"
+                                           Margin="12,3,0,0" />
                             </StackPanel>
 
-                            <Border Background="#D6E3ED" CornerRadius="6" Padding="16,16,16,8">
+                            <Border Background="{StaticResource CorCeu}" CornerRadius="6" Padding="16,16,16,8">
                                 <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled">
                                     <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom">
                                         <ItemsControl ItemsSource="{Binding Desenho}">
@@ -136,7 +138,7 @@
                                             <ItemsControl.ItemTemplate>
                                                 <DataTemplate>
                                                     <StackPanel>
-                                                        <Border BorderBrush="#6D5845" BorderThickness="0,0,0,3">
+                                                        <Border BorderBrush="{StaticResource CorSolo}" BorderThickness="0,0,0,3">
                                                             <StackPanel Orientation="Horizontal">
                                                                 <Rectangle Width="7" Height="{Binding AlturaDoPoste}"
                                                                            Fill="{Binding Cor}" Stroke="#46525B" StrokeThickness="0.6"
@@ -149,7 +151,7 @@
                                                                 </Grid>
                                                             </StackPanel>
                                                         </Border>
-                                                        <TextBlock Text="2,50 m" FontSize="11" Foreground="#5F6B75"
+                                                        <TextBlock Text="2,50 m" FontSize="11" Foreground="{StaticResource CorTextoSuave}"
                                                                    Width="120" TextAlignment="Center" HorizontalAlignment="Right"
                                                                    Margin="0,4,0,0" />
                                                     </StackPanel>
@@ -157,7 +159,8 @@
                                             </ItemsControl.ItemTemplate>
                                         </ItemsControl>
 
-                                        <Border BorderBrush="#6D5845" BorderThickness="0,0,0,3" VerticalAlignment="Top">
+                                        <Border BorderBrush="{StaticResource CorSolo}" BorderThickness="0,0,0,3"
+                                                VerticalAlignment="Top">
                                             <Rectangle Width="7" Height="{Binding AlturaDoPoste}"
                                                        Fill="{Binding CorDaCerca}" Stroke="#46525B" StrokeThickness="0.6" />
                                         </Border>
@@ -170,16 +173,14 @@
             </TabItem>
 
             <TabItem Header="  Pedidos confirmados  ">
-                <Border BorderBrush="#DDE3E9" BorderThickness="1" Padding="20" Margin="0,16,0,0">
+                <Border Style="{StaticResource Cartao}">
                     <DockPanel>
                         <TextBlock DockPanel.Dock="Top" Text="Pedidos confirmados (mais recentes primeiro)"
-                                   FontSize="16" FontWeight="SemiBold" Margin="0,0,0,12" />
+                                   Style="{StaticResource TituloDoCartao}" />
                         <TextBlock DockPanel.Dock="Top" Text="{Binding ErroNoHistorico}"
-                                   Foreground="#B3261E" Margin="0,0,0,8" />
+                                   Foreground="{StaticResource CorErro}" Margin="0,0,0,8" />
 
-                        <DataGrid ItemsSource="{Binding Pedidos}"
-                                  AutoGenerateColumns="False" IsReadOnly="True" HeadersVisibility="Column"
-                                  CanUserSortColumns="False">
+                        <DataGrid ItemsSource="{Binding Pedidos}">
                             <DataGrid.Columns>
                                 <DataGridTextColumn Header="Confirmado em" Width="180"
                                                     Binding="{Binding DataConfirmacao, StringFormat={}{0:dd/MM/yyyy HH:mm}}" />
