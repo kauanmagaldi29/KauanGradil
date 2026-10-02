@@ -98,4 +98,16 @@ public class OrcamentoViewModelTests
         Assert.Equal(2, vm.Pedidos.Count);
         Assert.Equal("Preta", vm.Pedidos[0].Pintura);
     }
+
+    [Fact]
+    public void Desenho_tem_um_vao_por_tela_na_cor_escolhida()
+    {
+        var vm = CriarViewModel();
+        vm.Pintura = Catalogo.Pinturas[3];
+
+        vm.Comprimento = "7";
+
+        Assert.Equal(3, vm.Desenho.Count);
+        Assert.All(vm.Desenho, vao => Assert.Equal("#2E7D4F", vao.Cor));
+    }
 }
