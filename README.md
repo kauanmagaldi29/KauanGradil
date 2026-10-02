@@ -3,11 +3,11 @@
 Aplicação desktop para orçamento de cercas Gradil: calcula os componentes,
 mostra um esboço da cerca na cor escolhida e guarda os pedidos confirmados.
 
-![.NET 8](https://img.shields.io/badge/.NET-8-512BD4) ![WPF](https://img.shields.io/badge/UI-WPF-1F5F99) ![SQLite](https://img.shields.io/badge/banco-SQLite-003B57)
+![.NET 8] ![WPF] ![SQLite]
 
 ## Como rodar
 
-Requisitos: Windows 10/11 e [.NET 8 SDK](https://dotnet.microsoft.com/download/dotnet/8.0) (ou mais recente).
+Requisitos: Windows 10/11 e [.NET 8 SDK] (ou mais recente).
 
 ```bash
 dotnet run --project src/Gradil.App
