@@ -4,7 +4,126 @@
              ShutdownMode="OnMainWindowClose">
     <Application.Resources>
 
+        <SolidColorBrush x:Key="CorPrincipal" Color="#1F5F99" />
+        <SolidColorBrush x:Key="CorFundo" Color="#F3F5F8" />
+        <SolidColorBrush x:Key="CorCartao" Color="#FFFFFF" />
+        <SolidColorBrush x:Key="CorBorda" Color="#DDE3E9" />
+        <SolidColorBrush x:Key="CorTexto" Color="#1E2A33" />
+        <SolidColorBrush x:Key="CorTextoSuave" Color="#5F6B75" />
+        <SolidColorBrush x:Key="CorErro" Color="#B3261E" />
+        <SolidColorBrush x:Key="CorSucesso" Color="#2E7D32" />
+        <SolidColorBrush x:Key="CorAviso" Color="#B26A00" />
+        <SolidColorBrush x:Key="CorSolo" Color="#6D5845" />
+        <SolidColorBrush x:Key="CorCeu" Color="#D6E3ED" />
+
         <BooleanToVisibilityConverter x:Key="BoolParaVisibilidade" />
+
+        <Style x:Key="Cartao" TargetType="Border">
+            <Setter Property="Background" Value="{StaticResource CorCartao}" />
+            <Setter Property="BorderBrush" Value="{StaticResource CorBorda}" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="CornerRadius" Value="8" />
+            <Setter Property="Padding" Value="20" />
+        </Style>
+
+        <Style x:Key="TituloDoCartao" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+            <Setter Property="Foreground" Value="{StaticResource CorTexto}" />
+            <Setter Property="Margin" Value="0,0,0,12" />
+        </Style>
+
+        <Style x:Key="Rotulo" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="{StaticResource CorTextoSuave}" />
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="Margin" Value="0,12,0,4" />
+        </Style>
+
+        <Style x:Key="Destaque" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="20" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+            <Setter Property="Foreground" Value="{StaticResource CorTexto}" />
+        </Style>
+
+        <Style TargetType="TextBox">
+            <Setter Property="Padding" Value="8,6" />
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="BorderBrush" Value="{StaticResource CorBorda}" />
+        </Style>
+
+        <Style TargetType="ComboBox">
+            <Setter Property="Padding" Value="8,6" />
+            <Setter Property="FontSize" Value="14" />
+        </Style>
+
+        <Style x:Key="BotaoPrincipal" TargetType="Button">
+            <Setter Property="Background" Value="{StaticResource CorPrincipal}" />
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+            <Setter Property="Padding" Value="18,9" />
+            <Setter Property="Margin" Value="0,0,8,0" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="Fundo" Background="{TemplateBinding Background}"
+                                CornerRadius="6" Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Fundo" Property="Opacity" Value="0.88" />
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="Fundo" Property="Opacity" Value="0.4" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="BotaoSecundario" TargetType="Button" BasedOn="{StaticResource BotaoPrincipal}">
+            <Setter Property="Background" Value="#E8EDF2" />
+            <Setter Property="Foreground" Value="{StaticResource CorTexto}" />
+        </Style>
+
+        <Style TargetType="DataGrid">
+            <Setter Property="AutoGenerateColumns" Value="False" />
+            <Setter Property="IsReadOnly" Value="True" />
+            <Setter Property="CanUserSortColumns" Value="False" />
+            <Setter Property="CanUserResizeRows" Value="False" />
+            <Setter Property="HeadersVisibility" Value="Column" />
+            <Setter Property="GridLinesVisibility" Value="Horizontal" />
+            <Setter Property="HorizontalGridLinesBrush" Value="{StaticResource CorBorda}" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Background" Value="{StaticResource CorCartao}" />
+            <Setter Property="RowBackground" Value="{StaticResource CorCartao}" />
+            <Setter Property="RowHeight" Value="32" />
+            <Setter Property="SelectionMode" Value="Single" />
+        </Style>
+
+        <Style TargetType="DataGridColumnHeader">
+            <Setter Property="Background" Value="{StaticResource CorFundo}" />
+            <Setter Property="Foreground" Value="{StaticResource CorTextoSuave}" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+            <Setter Property="Padding" Value="10,8" />
+            <Setter Property="BorderThickness" Value="0" />
+        </Style>
+
+        <Style TargetType="DataGridCell">
+            <Setter Property="Padding" Value="10,0" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="DataGridCell">
+                        <Border Padding="{TemplateBinding Padding}" Background="{TemplateBinding Background}">
+                            <ContentPresenter VerticalAlignment="Center" />
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
 
     </Application.Resources>
 </Application>
