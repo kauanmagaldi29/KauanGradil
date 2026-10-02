@@ -10,6 +10,9 @@ namespace Gradil.App.ViewModels;
 
 public class OrcamentoViewModel : ViewModelBase
 {
+    private const double PixelsPorMetro = 48;
+    private const double PostePassaDaTela = 12;
+    private const int LimiteDeTelasNoDesenho = 40;
     private static readonly CultureInfo PtBr = new("pt-BR");
 
     private readonly IPedidoRepositorio _repositorio;
@@ -67,6 +70,10 @@ public class OrcamentoViewModel : ViewModelBase
             if (!Alterar(ref _orcamento, value)) return;
 
             Notificar(nameof(TemOrcamento));
+            Notificar(nameof(Desenho));
+            Notificar(nameof(AlturaDoPoste));
+            Notificar(nameof(CorDaCerca));
+            Notificar(nameof(AvisoDoDesenho));
             ConfirmarCommand.AtualizarEstado();
         }
     }
@@ -90,6 +97,29 @@ public class OrcamentoViewModel : ViewModelBase
         get => _erroNoHistorico;
         private set => Alterar(ref _erroNoHistorico, value);
     }
+
+    public IReadOnlyList<VaoDaCerca> Desenho
+    {
+        get
+        {
+            if (Orcamento is null) return [];
+
+            var alturaDaTela = (double)Orcamento.Altura.Metros * PixelsPorMetro;
+            var quantidade = Math.Min(Orcamento.Telas, LimiteDeTelasNoDesenho);
+
+            return Enumerable.Range(0, quantidade)
+                .Select(_ => new VaoDaCerca(alturaDaTela, AlturaDoPoste, CorDaCerca))
+                .ToList();
+        }
+    }
+
+    public double AlturaDoPoste => (double)Altura.Metros * PixelsPorMetro + PostePassaDaTela;
+    public string CorDaCerca => Pintura.CorHex;
+
+    public string? AvisoDoDesenho =>
+        Orcamento != null && Orcamento.Telas > LimiteDeTelasNoDesenho
+            ? $"Mostrando {LimiteDeTelasNoDesenho} de {Orcamento.Telas} telas"
+            : null;
 
     private void Recalcular()
     {

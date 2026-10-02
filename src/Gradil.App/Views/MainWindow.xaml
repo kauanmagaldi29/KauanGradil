@@ -41,7 +41,17 @@
                             <ComboBox ItemsSource="{Binding Alturas}" SelectedItem="{Binding Altura}" />
 
                             <TextBlock Text="Pintura" Margin="0,12,0,4" />
-                            <ComboBox ItemsSource="{Binding Pinturas}" SelectedItem="{Binding Pintura}" />
+                            <ComboBox ItemsSource="{Binding Pinturas}" SelectedItem="{Binding Pintura}">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Border Width="14" Height="14" CornerRadius="3" Margin="0,0,8,0"
+                                                    Background="{Binding CorHex}" BorderBrush="#9AA5AE" BorderThickness="1" />
+                                            <TextBlock Text="{Binding Nome}" VerticalAlignment="Center" />
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
 
                             <TextBlock Text="{Binding Erro}" Foreground="#B3261E"
                                        TextWrapping="Wrap" Margin="0,12,0,0" />
@@ -104,6 +114,57 @@
                                 </DataGrid>
                             </StackPanel>
                         </Grid>
+                    </Border>
+
+                    <Border Grid.Row="2" Grid.ColumnSpan="3" BorderBrush="#DDE3E9" BorderThickness="1" Padding="20"
+                            Visibility="{Binding TemOrcamento, Converter={StaticResource BoolParaVisibilidade}}">
+                        <DockPanel>
+                            <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="0,0,0,12">
+                                <TextBlock Text="Esboço da cerca" FontSize="16" FontWeight="SemiBold" />
+                                <TextBlock Text="{Binding AvisoDoDesenho}" Foreground="#5F6B75" Margin="12,3,0,0" />
+                            </StackPanel>
+
+                            <Border Background="#D6E3ED" CornerRadius="6" Padding="16,16,16,8">
+                                <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled">
+                                    <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom">
+                                        <ItemsControl ItemsSource="{Binding Desenho}">
+                                            <ItemsControl.ItemsPanel>
+                                                <ItemsPanelTemplate>
+                                                    <StackPanel Orientation="Horizontal" />
+                                                </ItemsPanelTemplate>
+                                            </ItemsControl.ItemsPanel>
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate>
+                                                    <StackPanel>
+                                                        <Border BorderBrush="#6D5845" BorderThickness="0,0,0,3">
+                                                            <StackPanel Orientation="Horizontal">
+                                                                <Rectangle Width="7" Height="{Binding AlturaDoPoste}"
+                                                                           Fill="{Binding Cor}" Stroke="#46525B" StrokeThickness="0.6"
+                                                                           VerticalAlignment="Bottom" />
+                                                                <Grid Width="120" Height="{Binding AlturaDaTela}"
+                                                                      VerticalAlignment="Bottom" Margin="0,0,0,4">
+                                                                    <Rectangle Fill="{Binding Cor}" Opacity="0.28" />
+                                                                    <Rectangle Stroke="{Binding Cor}" StrokeThickness="2.5" />
+                                                                    <Rectangle Stroke="#46525B" StrokeThickness="0.6" Margin="-1.5" />
+                                                                </Grid>
+                                                            </StackPanel>
+                                                        </Border>
+                                                        <TextBlock Text="2,50 m" FontSize="11" Foreground="#5F6B75"
+                                                                   Width="120" TextAlignment="Center" HorizontalAlignment="Right"
+                                                                   Margin="0,4,0,0" />
+                                                    </StackPanel>
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+                                        </ItemsControl>
+
+                                        <Border BorderBrush="#6D5845" BorderThickness="0,0,0,3" VerticalAlignment="Top">
+                                            <Rectangle Width="7" Height="{Binding AlturaDoPoste}"
+                                                       Fill="{Binding CorDaCerca}" Stroke="#46525B" StrokeThickness="0.6" />
+                                        </Border>
+                                    </StackPanel>
+                                </ScrollViewer>
+                            </Border>
+                        </DockPanel>
                     </Border>
                 </Grid>
             </TabItem>
