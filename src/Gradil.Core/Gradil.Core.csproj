@@ -6,4 +6,11 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <PackageId>Gradil.Core</PackageId>
+    <Version>1.0.0</Version>
+    <Authors>Kauan</Authors>
+    <Description>Regras de cálculo da cerca Gradil: telas, postes, fixadores e parafusos.</Description>
+  </PropertyGroup>
+
 </Project>
