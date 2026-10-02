@@ -168,6 +168,31 @@
                     </Border>
                 </Grid>
             </TabItem>
+
+            <TabItem Header="  Pedidos confirmados  ">
+                <Border BorderBrush="#DDE3E9" BorderThickness="1" Padding="20" Margin="0,16,0,0">
+                    <DockPanel>
+                        <TextBlock DockPanel.Dock="Top" Text="Pedidos confirmados (mais recentes primeiro)"
+                                   FontSize="16" FontWeight="SemiBold" Margin="0,0,0,12" />
+                        <TextBlock DockPanel.Dock="Top" Text="{Binding ErroNoHistorico}"
+                                   Foreground="#B3261E" Margin="0,0,0,8" />
+
+                        <DataGrid ItemsSource="{Binding Pedidos}"
+                                  AutoGenerateColumns="False" IsReadOnly="True" HeadersVisibility="Column"
+                                  CanUserSortColumns="False">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Confirmado em" Width="180"
+                                                    Binding="{Binding DataConfirmacao, StringFormat={}{0:dd/MM/yyyy HH:mm}}" />
+                                <DataGridTextColumn Header="Comprimento" Width="140"
+                                                    Binding="{Binding Comprimento, StringFormat={}{0:0.00} m}" />
+                                <DataGridTextColumn Header="Altura" Width="120"
+                                                    Binding="{Binding Altura, StringFormat={}{0:0.00} m}" />
+                                <DataGridTextColumn Header="Pintura" Width="*" Binding="{Binding Pintura}" />
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </DockPanel>
+                </Border>
+            </TabItem>
         </TabControl>
     </DockPanel>
 </Window>
