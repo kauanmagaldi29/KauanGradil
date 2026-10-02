@@ -1,0 +1,112 @@
+<Window x:Class="Gradil.App.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Gradil · Orçamento de cercas"
+        Width="1100" Height="760" MinWidth="960" MinHeight="640"
+        WindowStartupLocation="CenterScreen"
+        FontFamily="Segoe UI" FontSize="14">
+
+    <DockPanel>
+
+        <Border DockPanel.Dock="Top" Background="#1F5F99" Padding="28,18">
+            <StackPanel>
+                <TextBlock Text="Gradil" FontSize="22" FontWeight="SemiBold" Foreground="White" />
+                <TextBlock Text="Orçamento e pedidos de cercas" Foreground="#CFE0F0" />
+            </StackPanel>
+        </Border>
+
+        <TabControl Margin="20,16,20,20">
+
+            <TabItem Header="  Novo orçamento  ">
+                <Grid Margin="0,16,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="300" />
+                        <ColumnDefinition Width="16" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="16" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+
+                    <Border BorderBrush="#DDE3E9" BorderThickness="1" Padding="20">
+                        <StackPanel>
+                            <TextBlock Text="Dados do pedido" FontSize="16" FontWeight="SemiBold" Margin="0,0,0,12" />
+
+                            <TextBlock Text="Comprimento da cerca (m)" Margin="0,0,0,4" />
+                            <TextBox Text="{Binding Comprimento, UpdateSourceTrigger=PropertyChanged}" />
+
+                            <TextBlock Text="Altura" Margin="0,12,0,4" />
+                            <ComboBox ItemsSource="{Binding Alturas}" SelectedItem="{Binding Altura}" />
+
+                            <TextBlock Text="Pintura" Margin="0,12,0,4" />
+                            <ComboBox ItemsSource="{Binding Pinturas}" SelectedItem="{Binding Pintura}" />
+
+                            <TextBlock Text="{Binding Erro}" Foreground="#B3261E"
+                                       TextWrapping="Wrap" Margin="0,12,0,0" />
+
+                            <StackPanel Orientation="Horizontal" Margin="0,16,0,0">
+                                <Button Content="Confirmar pedido" Command="{Binding ConfirmarCommand}"
+                                        Padding="18,9" Margin="0,0,8,0" />
+                                <Button Content="Cancelar" Command="{Binding CancelarCommand}"
+                                        Padding="18,9" />
+                            </StackPanel>
+
+                            <TextBlock Text="{Binding Sucesso}" Foreground="#2E7D32"
+                                       FontWeight="SemiBold" TextWrapping="Wrap" Margin="0,12,0,0" />
+                        </StackPanel>
+                    </Border>
+
+                    <Border Grid.Column="2" BorderBrush="#DDE3E9" BorderThickness="1" Padding="20">
+                        <Grid>
+                            <TextBlock Text="Informe o comprimento para ver o orçamento."
+                                       Foreground="#5F6B75"
+                                       HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <TextBlock.Style>
+                                    <Style TargetType="TextBlock">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding TemOrcamento}" Value="True">
+                                                <Setter Property="Visibility" Value="Collapsed" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+
+                            <StackPanel Visibility="{Binding TemOrcamento, Converter={StaticResource BoolParaVisibilidade}}">
+                                <TextBlock Text="Orçamento" FontSize="16" FontWeight="SemiBold" Margin="0,0,0,12" />
+
+                                <UniformGrid Columns="3" Margin="0,0,0,16">
+                                    <StackPanel>
+                                        <TextBlock Text="Cliente vai construir" Foreground="#5F6B75" />
+                                        <TextBlock FontSize="20" FontWeight="SemiBold"
+                                                   Text="{Binding Orcamento.ComprimentoDesejado, StringFormat={}{0:0.00} m}" />
+                                    </StackPanel>
+                                    <StackPanel>
+                                        <TextBlock Text="Será vendido" Foreground="#5F6B75" />
+                                        <TextBlock FontSize="20" FontWeight="SemiBold" Foreground="#1F5F99"
+                                                   Text="{Binding Orcamento.ComprimentoVendido, StringFormat={}{0:0.00} m}" />
+                                    </StackPanel>
+                                    <StackPanel Visibility="{Binding Orcamento.TemDiferenca, Converter={StaticResource BoolParaVisibilidade}}">
+                                        <TextBlock Text="Sobra" Foreground="#5F6B75" />
+                                        <TextBlock FontSize="20" FontWeight="SemiBold" Foreground="#B26A00"
+                                                   Text="{Binding Orcamento.Diferenca, StringFormat=+{0:0.00} m}" />
+                                    </StackPanel>
+                                </UniformGrid>
+
+                                <DataGrid ItemsSource="{Binding Orcamento.Itens}" Width="320" HorizontalAlignment="Left"
+                                          AutoGenerateColumns="False" IsReadOnly="True" HeadersVisibility="Column">
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn Header="Componente" Binding="{Binding Componente}" Width="*" />
+                                        <DataGridTextColumn Header="Quantidade" Binding="{Binding Quantidade}" Width="110" />
+                                    </DataGrid.Columns>
+                                </DataGrid>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+                </Grid>
+            </TabItem>
+        </TabControl>
+    </DockPanel>
+</Window>
